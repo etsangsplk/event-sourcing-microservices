@@ -87,7 +87,7 @@ We will cover:
 Obtain credentials for the Event Store
 ---------------------------------------------------------------------------
 
-In order to run the micro-services separately, you need to get credentials for the <a href="https://github.com/cer/event-sourcing-examples/wiki/AboutTheEventStoreServer">**Event Store**</a>
+In order to run the micro-services separately, you need to get credentials for the <a href="https://signup.eventuate.io">**Event Store**</a>
 
 You will need copy and paste the obtained values for **EVENTUATE_API_KEY_ID** and **EVENTUATE_API_KEY_SECRET** in the <a href=#event-sourcing-docker-java-microservices>Event Sourcing Docker Java Microservices Application Template</a>
 
