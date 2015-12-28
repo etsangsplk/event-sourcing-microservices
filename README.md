@@ -13,7 +13,7 @@ To run & manage the **Event Sourcing Docker Java Microservices** application tem
 -   **Sign Up for FREE on DCHQ.io** -- <http://dchq.io> (no credit card required), or
 -   **Download DCHQ On-Premise Standard Edition for FREE** -- <http://dchq.co/dchq-on-premise-download.html>
 
-[![Customize and Run](https://dl.dropboxusercontent.com/u/4090128/dchq-customize-and-run.png)](https://www.dchq.io/landing/products.html#/library?org=DCHQ)
+[![Customize and Run](https://dl.dropboxusercontent.com/u/4090128/dchq-customize-and-run.png)](https://www.dchq.io/landing/products.html#/library?org=DCHQ&bl=2c91802251d157d70151d22c6b942300)
 
 **Table of Contents**  
 
@@ -399,6 +399,7 @@ For the Tomcat deployment for example, we used the command prompt to make sure t
 <img src="screenshots/0-In-Browser Container Terminal Button.png"  />
 </figure>
 
+ 
 
 <figure>
 <img src="screenshots/0-In-Browser%20Container%20Terminal.png"  />
@@ -428,6 +429,7 @@ Developers, as a result will always have the latest Java JAR file deployed on th
 <img src="screenshots/0-App%20Day-2%20Operations.png"  />
 </figure>
 
+ 
 
 <figure>
 <img src="screenshots/0-Continuous%20Delivery.png"  />
