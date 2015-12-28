@@ -20,6 +20,7 @@ To run & manage the **Event Sourcing Docker Java Microservices** application tem
 - [DCHQ - Event Sourcing Docker Java Microservices ](#dchq---event-sourcing-docker-java-microservices-)
 - [A step by step guide for automating the deployment & management of a Docker Java Microservices application on any cloud or virtualization platform](#dchq---event-sourcing-docker-java-microservices-)
 	- [Background](#background)
+	- [Obtain credentials for the Event Store](#obtain-credentials-for-the-event-store)
 	- [Applying a patch and building the JAR files](#applying-a-patch-and-building-the-jar-files)
 	- [Automating the building of Docker images from Dockerfiles in this project using DCHQ](#automating-the-building-of-docker-images-from-dockerfiles-in-this-project-using-dchq)
 	- [Building the YAML-based application templates that can re-used on any Linux host running anywhere](#building-the-yaml-based-application-templates-that-can-re-used-on-any-linux-host-running-anywhere)
@@ -65,6 +66,8 @@ In this project, we will provide a step-by-step guide for deploying and managing
 
 We will cover:
 
+-   Obtain credentials for the Event Store
+-   
 -   Applying a patch and building the JAR files
 
 -   Automating the building of Docker images from Dockerfiles in this project using DCHQ
@@ -81,6 +84,15 @@ We will cover:
 
  
 
+Obtain credentials for the Event Store
+---------------------------------------------------------------------------
+
+In order to run the micro-services separately, you need to get credentials for the <a href="https://github.com/cer/event-sourcing-examples/wiki/AboutTheEventStoreServer">**Event Store**</a>
+
+You will need copy and paste the obtained values for **EVENTUATE_API_KEY_ID** and **EVENTUATE_API_KEY_SECRET** in the <a href=#event-sourcing-docker-java-microservices>Event Sourcing Docker Java Microservices Application Template</a>
+
+ 
+
 Applying a patch and building the JAR files
 ---------------------------------------------------------------------------
 
@@ -93,7 +105,7 @@ Before building the JAR files, please copy CORSFilter.java in the "event-sourcin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 git clone https://github.com/cer/event-sourcing-examples.git
 
-wget https://github.com/dchqinc/event-sourcing-microservices/patch/CORSFilter.java -O /event-sourcing-examples/java-spring/common-web/src/main/java/net/chrisrichardson/eventstore/javaexamples/banking/web/util/CORSFilter.java
+wget https://github.com/dchqinc/event-sourcing-microservices/raw/master/patch/CORSFilter.java -O /event-sourcing-examples/java-spring/common-web/src/main/java/net/chrisrichardson/eventstore/javaexamples/banking/web/util/CORSFilter.java
 
 cd /event-sourcing-examples/java-spring
 
@@ -276,8 +288,8 @@ accountscommandside:
   host: host1
   publish_all: true
   environment:
-    - EVENTUATE_API_KEY_ID=4K36NGM2J3JAICADIBNK7ZZBR
-    - EVENTUATE_API_KEY_SECRET=Fp2xWBexgxLHlB1LwzoKY6RHlHzcllRNgXn+x8i9KvQ
+    - EVENTUATE_API_KEY_ID=<paste-your-key-here>
+    - EVENTUATE_API_KEY_SECRET=<paste-your-key-here>
 
 transactionscommandside:
   image: dchq/transactions-command-side-service
@@ -286,8 +298,8 @@ transactionscommandside:
   host: host1
   publish_all: true
   environment:
-    - EVENTUATE_API_KEY_ID=4K36NGM2J3JAICADIBNK7ZZBR
-    - EVENTUATE_API_KEY_SECRET=Fp2xWBexgxLHlB1LwzoKY6RHlHzcllRNgXn+x8i9KvQ
+    - EVENTUATE_API_KEY_ID=<paste-your-key-here>
+    - EVENTUATE_API_KEY_SECRET=<paste-your-key-here>
     
 accountsqueryside:
   image: dchq/accounts-query-side-service
@@ -296,8 +308,8 @@ accountsqueryside:
   host: host1
   publish_all: true
   environment:
-    - EVENTUATE_API_KEY_ID=4K36NGM2J3JAICADIBNK7ZZBR
-    - EVENTUATE_API_KEY_SECRET=Fp2xWBexgxLHlB1LwzoKY6RHlHzcllRNgXn+x8i9KvQ
+    - EVENTUATE_API_KEY_ID=<paste-your-key-here>
+    - EVENTUATE_API_KEY_SECRET=<paste-your-key-here>
     - SPRING_DATA_MONGODB_URI=mongodb://{{mongodb | container_private_ip}}/mydb
 
 mongodb:
