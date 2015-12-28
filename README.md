@@ -92,8 +92,11 @@ Before building the JAR files, please copy CORSFilter.java in the "event-sourcin
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 git clone https://github.com/cer/event-sourcing-examples.git
+
 wget https://github.com/dchqinc/event-sourcing-microservices/patch/CORSFilter.java -O /event-sourcing-examples/java-spring/common-web/src/main/java/net/chrisrichardson/eventstore/javaexamples/banking/web/util/CORSFilter.java
+
 cd /event-sourcing-examples/java-spring
+
 ./gradlew assemble
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -396,6 +399,7 @@ For the Tomcat deployment for example, we used the command prompt to make sure t
 <img src="screenshots/0-In-Browser Container Terminal Button.png"  />
 </figure>
 
+
 <figure>
 <img src="screenshots/0-In-Browser%20Container%20Terminal.png"  />
 </figure>
@@ -423,6 +427,7 @@ Developers, as a result will always have the latest Java JAR file deployed on th
 <figure>
 <img src="screenshots/0-App%20Day-2%20Operations.png"  />
 </figure>
+
 
 <figure>
 <img src="screenshots/0-Continuous%20Delivery.png"  />
