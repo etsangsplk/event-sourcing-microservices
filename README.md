@@ -2,8 +2,6 @@
 <img src="http://ww1.prweb.com/prfiles/2015/07/21/12907174/gI_146921_dchq-logo.png" alt="" />
 </figure>
 
-### **WARNING** -- this project is under progress
-
 This is an extension of this project (https://github.com/cer/event-sourcing-examples). The project now provides a consolidated front-end that uses all of the microservices and can run on any web server. In this project, we use Nginx. The front-end provides the following capabilities:
 -   **Create a new account using an initial balance**
 -   **Query an account to get the remaining balance**
@@ -41,7 +39,7 @@ To run & manage the **Event Sourcing Docker Java Microservices** application tem
 DCHQ - Event Sourcing Docker Java Microservices 
 ===========================
 <figure>
-<img src="/screenshots/0-Names%20Directory%20Java%20App.png" alt="" />
+<img src="/screenshots/0-Event%20Sourcing%20Docker%20Java%20Microservices.png" alt="" />
 </figure>
 
  
@@ -247,7 +245,7 @@ Here is a list of supported environment variable values:
 
 ### Event Sourcing Docker Java Microservices
 
-[![Customize and Run](https://dl.dropboxusercontent.com/u/4090128/dchq-customize-and-run.png)](https://www.dchq.io/landing/products.html#/library?org=DCHQ&bl=2c91802051ab66610151b73d41de71cb)
+[![Customize and Run](https://dl.dropboxusercontent.com/u/4090128/dchq-customize-and-run.png)](https://www.dchq.io/landing/products.html#/library?org=DCHQ&bl=2c91802251d157d70151d22c6b942300)
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 nginx:
