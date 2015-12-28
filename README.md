@@ -19,29 +19,26 @@ To run & manage the **Event Sourcing Docker Java Microservices** application tem
 
 **Table of Contents**  
 
-- [DCHQ - Docker Java Example ](#dchq---docker-java-example-)
-- [A Step by Step Guide for Deploying & Managing a Docker-based Java Application with Solr on Mongo, Cassandra, MySQL and Oracle](#dchq---docker-java-example-)
+- [DCHQ - Event Sourcing Docker Java Microservices ](#dchq---event-sourcing-docker-java-microservices-)
+- [A step by step guide for automating the deployment & management of a Docker Java Microservices application on any cloud or virtualization platform](#dchq---event-sourcing-docker-java-microservices-)
 	- [Background](#background)
-	- [Configuring the Java files for database and Solr connection environment variables](#configuring-the-java-files-for-database-and-solr-connection-environment-variables)
-	- [Using the liquibase bean to initialize the connected MySQL, PostgreSQL and Oracle databases](#using-the-liquibase-bean-to-initialize-the-connected-mysql-postgresql-and-oracle-databases)
+	- [Applying a patch and building the JAR files](#applying-a-patch-and-building-the-jar-files)
+	- [Automating the building of Docker images from Dockerfiles in this project using DCHQ](#automating-the-building-of-docker-images-from-dockerfiles-in-this-project-using-dchq)
 	- [Building the YAML-based application templates that can re-used on any Linux host running anywhere](#building-the-yaml-based-application-templates-that-can-re-used-on-any-linux-host-running-anywhere)
-		- [Plug-ins to configure Web Servers and Application Servers at Request Time and Post Provision](#plug-ins-to-configure-web-servers-and-application-servers-at-request-time--post-provision)
+		- [Plug-ins to configure Web Server at Request Time and Post Provision](#plug-ins-to-configure-web-server-at-request-time--post-provision)
 		- [Service Discovery with plug-in life-cycle stages](#service-discovery-with-plug-in-life-cycle-stages)
 		- [cluster_size and host Parameters for HA Deployment Across Multiple Hosts](#cluster_size-and-host-parameters-for-ha-deployment-across-multiple-hosts)
 		- [Environment Variable Bindings Across Images](#environment-variable-bindings-across-images)
-		- [Multi-Tier Java (Nginx – Tomcat – Solr - MySQL)](#multi-tier-java-nginx-tomcat-solr-mysql)
-		- [Invoking a plug-in to initialize the database separately on a 3-Tier Java (Nginx – Tomcat – MySQL)](#invoking-a-plug-in-to-initialize-the-database-separately-on-a-3-tier-java-nginx--tomcat--mysql)
-		- [Using your script or deployment plan](#using-your-script-or-deployment-plan)
+		- [Event Sourcing Docker Java Microservices](#event-sourcing-docker-java-microservices)
 	- [Provisioning & Auto-Scaling the Underlying Infrastructure on Any Cloud](#provisioning--auto-scaling-the-underlying-infrastructure-on-any-cloud)
 	- [Deploying the Multi-Tier Java Application on the Rackspace Cluster](#deploying-the-multi-tier-java-application-on-the-rackspace-cluster)
 	- [Accessing The In-Browser Terminal For The Running Containers](#accessing-the-in-browser-terminal-for-the-running-containers)
 	- [Monitoring the CPU, Memory & I/O Utilization of the Running Containers](#monitoring-the-cpu-memory--io-utilization-of-the-running-containers)
-	- [Enabling the Continuous Delivery Workflow with Jenkins to Update the WAR File of the Running Application when a Build is Triggered](#enabling-the-continuous-delivery-workflow-with-jenkins-to-update-the-war-file-of-the-running-application-when-a-build-is-triggered)
-	- [Scaling out the Tomcat Application Server Cluster](#scaling-out-the-tomcat-application-server-cluster)
+	- [Enabling the Continuous Delivery Workflow with Jenkins to Update the JAR File of the Running Application when a Build is Triggered](#enabling-the-continuous-delivery-workflow-with-jenkins-to-update-the-jar-file-of-the-running-application-when-a-build-is-triggered)
 	- [Conclusion](#conclusion)
  
 
-DCHQ - Docker Java Microservices Example 
+DCHQ - Event Sourcing Docker Java Microservices 
 ===========================
 <figure>
 <img src="/screenshots/0-Names%20Directory%20Java%20App.png" alt="" />
@@ -70,6 +67,8 @@ In this project, we will provide a step-by-step guide for deploying and managing
 
 We will cover:
 
+-   Applying a patch and building the JAR files
+
 -   Automating the building of Docker images from Dockerfiles in this project using DCHQ
 
 -   Building the YAML-based application templates that can re-used on any Linux host running anywhere
@@ -84,10 +83,74 @@ We will cover:
 
  
 
+Applying a patch and building the JAR files
+---------------------------------------------------------------------------
+
+The JAR files used in the Docker images were built from this project: <a href="https://github.com/cer/event-sourcing-examples">https://github.com/cer/event-sourcing-examples</a>
+
+All of the JAR files were built on December 27th, 2015 and embedded in the Docker images <a href="#automating-the-building-of-docker-images-from-dockerfiles-in-this-project-using-dchq">here</a>.
+
+Before building the JAR files, please copy CORSFilter.java in the "event-sourcing-examples/java-spring/common-web/src/main/java/net/chrisrichardson/eventstore/javaexamples/banking/web/util" directory. You can then execute ./gradlew assemble.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+git clone https://github.com/cer/event-sourcing-examples.git
+wget https://github.com/dchqinc/event-sourcing-microservices/patch/CORSFilter.java -O /event-sourcing-examples/java-spring/common-web/src/main/java/net/chrisrichardson/eventstore/javaexamples/banking/web/util/CORSFilter.java
+cd /event-sourcing-examples/java-spring
+./gradlew assemble
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ 
+
 Automating the building of Docker images from Dockerfiles in this project using DCHQ
 ---------------------------------------------------------------------------
 
-To be completed
+All of the images in this project have already been built and pushed to the DCHQ public Docker Hub repository. Here are the custom images that will be used in the application template:
+
+-   **dchq/nginx-microservices:latest**
+-   **dchq/accounts-command-side-service**
+-   **dchq/transactions-command-side-service**
+-   **dchq/transactions-command-side-service**-   
+
+To build the images and push them into your own Docker Hub or Quay repository, you can use DCHQ. Here are the four GitHub projects used for these images:
+
+-   <a href="https://github.com/dchqinc/accounts-command-side-service">https://github.com/dchqinc/accounts-command-side-service</a>
+-   <a href="https://github.com/dchqinc/accounts-query-side-service">https://github.com/dchqinc/accounts-query-side-service</a>
+-   <a href="https://github.com/dchqinc/transactions-command-side-service">https://github.com/dchqinc/transactions-command-side-service</a>
+-   <a href="https://github.com/dchqinc/nginx-microservices">https://github.com/dchqinc/nginx-microservices</a>  
+
+Once logged in to DCHQ (either the hosted DCHQ.io or on-premise version), a user can navigate to **Automate** > **Image Build** and then click on the **+** button to create a new **Dockerfile (Git/GitHub/BitBucket)** image build.
+
+Provide the required values as follows:
+
+-   **Git URL** – (e.g. https://github.com/dchqinc/nginx-microservices.git)
+
+-   **Git Branch** – this field is optional -- but a user can specify a branch from a GitHub project. The default branch is master.
+
+-   **Git Credentials** – a user can store the credentials to a private GitHub repository securely in DCHQ. This can be done by navigating to **Manage** > **Cloud Providers and Repos** and clicking on the **+** to select **Credentials**
+
+-   **Cluster** – the building of Docker images is orchestrated through the DCHQ agent. As a result, a user needs to select a cluster on which an agent will be used to execute the building of Docker images. If a cluster has not been created yet, please refer to this <a href=#provisioning--auto-scaling-the-underlying-infrastructure-on-any-cloud>section</a> to either register already running hosts or automate the provisioning of new virtual infrastructure.
+
+-   **Push to Registry** – a user can push the newly created image on either a public or private repository on Docker Hub or Quay. To register a Docker Hub or Quay account, a user should navigate to **Manage** > **Cloud Providers and Repos** and clicking on the **+** to select **Docker Registries**
+
+-   **Repository** – this is the name of the repository on which the image will be pushed. For example, our image was pushed to **dchq/php-example:latest**
+
+-   **Tag** – this is the tag name that you would like to give for the new image. The supported tag names in DCHQ include:
+	
+	- **{{date}}** -- formatted date
+	
+	- **{{timestamp}}** -- the full time-stamp
+
+-   **Cron Expression** – a user can schedule the building of Docker images using out-of-box cron expressions. This facilitates daily and nightly builds for users.
+
+Once the required fields are completed, a user can click **Save**.
+
+A user can then click on the **Play Button** to build the Docker image on-demand.
+
+<figure>
+<img src="screenshots/0-nginx-microservices.png"/>
+</figure>
+
+ 
 
 Building the YAML-based application templates that can re-used on any Linux host running anywhere
 -------------------------------------------------------------------------------------------------
@@ -99,7 +162,7 @@ We have created an application template using the Docker images we built in the 
 -   **Account Creation, Account Query and Balance Transfer Microservices** -- these services were built from the original project: <a href="https://github.com/cer/event-sourcing-examples">https://github.com/cer/event-sourcing-examples</a>. A patch was applied by copying CORSFilter.java in the "event-sourcing-examples/java-spring/common-web/src/main/java/net/chrisrichardson/eventstore/javaexamples/banking/web/util" directory.
 -   **Mongo** -- for the databases
 
-### Plug-ins to Configure Web Servers and Application Servers at **Request Time & Post-Provision**
+### Plug-ins to Configure Web Server at **Request Time & Post-Provision**
 
 In the application template, you will notice that some of the Nginx container is invoking a BASH script plug-in at request time in order to configure the container. This plug-in can be executed post-provision as well.
 
@@ -243,31 +306,6 @@ mongodb:
 
  
 
-
-### Invoking a plug-in to initialize the database separately on a multi-tier Java application
-
-We recommend initializing the database schema as part of the Java WAR file deployment itself. However if you still prefer executing the SQL files on the database separately – then DCHQ can help you automate this process through its plug-in framework.
-
-In this example, MySQL in this 3-Tier application is invoking a BASH script plug-in to execute the upgrade.sql file. The BASH script plug-in was created by navigating to **Manage > Plug-ins** and looks something like this:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#!/bin/bash
-
-apt-get update
-apt-get -y install wget
-cd /
-wget $file_url
-/usr/bin/mysql -u $MYSQL_USER -p$MYSQL_ROOT_PASSWORD -h127.0.0.1 $MYSQL_DATABASE < /upgrade.sql
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In this BASH script plug-in, **$MYSQL_USER**, **$MYSQL_ROOT_PASSWORD**, and **$MYSQL_DATABASE** are environment variables that are passed at request time.
-
-**$file_url** is an overrideable argument that you can define when creating the plug-in or when requesting the application. For example, this could be the upgrade.sql file from GitHub:
-
-<https://github.com/dchqinc/dchq-docker-java-solr-mongo-cassandra-example/blob/master/src/main/webapp/WEB-INF/upgrade/upgrade.sql>
-
- 
-
 Provisioning & Auto-Scaling the Underlying Infrastructure on Any Cloud
 ----------------------------------------------------------------------
 
@@ -369,24 +407,24 @@ Monitoring the CPU, Memory & I/O Utilization of the Running Containers
 
 Once the application is up and running, our developers monitor the CPU, Memory, & I/O of the running containers to get alerts when these metrics exceed a pre-defined threshold. This is especially useful when our developers are performing functional & load testing.
 
-A user can perform historical monitoring analysis and correlate issues to container updates or build deployments. This can be done by clicking on the **Actions** menu of the running application and then on **Monitoring**. A custom date range can be selected to view CPU, Memory and I/O historically.
-
-<figure>
-<img src="screenshots/0-App%20Day-2%20Operations.png"  />
-</figure>
+A user can perform historical monitoring analysis and correlate issues to container updates or build deployments. This can be done by clicking on **Stats**. A custom date range can be selected to view CPU, Memory and I/O historically.
 
 <figure>
 <img src="screenshots/0-Containers%20Monitoring.png"  />
 </figure>
 
-Enabling the Continuous Delivery Workflow with Jenkins to Update the WAR File of the Running Application when a Build is Triggered
+Enabling the Continuous Delivery Workflow with Jenkins to Update the JAR File of the Running Application when a Build is Triggered
 ----------------------------------------------------------------------------------------------------------------------------------
 
 For developers wishing to follow the “immutable” containers model by rebuilding Docker images containing the application code and spinning up new containers with every application update, DCHQ provides an automated build feature that allows developers to automatically create Docker images from Dockerfiles or private GitHub projects containing Dockerfiles.
 
-However, many developers may wish to *update the running application server containers with the latest Java WAR file* instead. For that, DCHQ allows developers to enable a continuous delivery workflow with Jenkins. This can be done by clicking on the **Actions** menu of the running application and then selecting **Continuous Delivery**. A user can select a Jenkins instance that has already been registered with DCHQ, the actual Job on Jenkins that will produce the latest WAR file, and then a BASH script plug-in to grab this build and deploy it on a running application server. Once this policy is saved, DCHQ will grab the latest WAR file from Jenkins any time a build is triggered and deploy it on the running application server.
+However, many developers may wish to *update the running application server containers with the latest Java JAR file* instead. For that, DCHQ allows developers to enable a continuous delivery workflow with Jenkins. This can be done by clicking on the **Actions** menu of the running application and then selecting **Continuous Delivery**. A user can select a Jenkins instance that has already been registered with DCHQ, the actual Job on Jenkins that will produce the latest JAR file, and then a BASH script plug-in to grab this build and deploy it on a running application server. Once this policy is saved, DCHQ will grab the latest WAR file from Jenkins any time a build is triggered and deploy it on the running application server.
 
-Developers, as a result will always have the latest Java WAR file deployed on their running containers in DEV/TEST environments.
+Developers, as a result will always have the latest Java JAR file deployed on their running containers in DEV/TEST environments.
+
+<figure>
+<img src="screenshots/0-App%20Day-2%20Operations.png"  />
+</figure>
 
 <figure>
 <img src="screenshots/0-Continuous%20Delivery.png"  />
