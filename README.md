@@ -1,0 +1,2 @@
+# event-sourcing-microservices
+A microservices Java application that can be deployed on extremely lightweight Docker Java containers -- without needing any application servers. The Java application connects to Mongo as the underlying database and use Nginx for front-end. This project is public and is designed to provide a step-by-step guide for Dockerizing and managing your Java microservices applications using DCHQ.
