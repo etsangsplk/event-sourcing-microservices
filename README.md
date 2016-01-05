@@ -7,7 +7,7 @@ This is an extension of this project (https://github.com/cer/event-sourcing-exam
 -   **Query an account to get the remaining balance**
 -   **Transfer money from one account to another**
 
-The purpose of this project is to show how users can automate the deployment & management of this Docker Java Microservices application on any cloud or virtualization platform.
+The purpose of this project is to show how users can automate the deployment & management of this Docker Java Microservices application on any cloud or virtualization platform. This money transfer application is an example of building and deploying microservices with event sourcing, CQRS and Docker. The application is architected to be highly scalable and available based on microservices, polyglot persistence, event sourcing (ES) and command query responsibility segregation (CQRS). Microservices applications consist of loosely coupled components that communicate using events. These components can be deployed either as separate services or packaged as a monolithic application for simplified development and testing. In this project, we focus on automating the deployment of the former -- i.e. deploying this application using separate services running on Docker containers.
 
 To run & manage the **Event Sourcing Docker Java Microservices** application template in this project on 13 different clouds and virtualization platforms (including vSphere, OpenStack, AWS, Rackspace, Microsoft Azure, Google Compute Engine, DigitalOcean, IBM SoftLayer, etc.), make sure that you either:
 -   **Sign Up for FREE on DCHQ.io** -- <http://dchq.io> (no credit card required), or
@@ -45,7 +45,7 @@ DCHQ - Event Sourcing Docker Java Microservices
 
  
 
-A Step by Step Guide for Deploying & Managing a Docker-based Java Application with Solr on Mongo, Cassandra, MySQL and Oracle
+A step by step guide for automating the deployment & management of a Docker Java Microservices application on any cloud or virtualization platform
 =======================================================================================================================================
  
 
@@ -54,20 +54,20 @@ Background
 
 Containerizing enterprise Java applications is still a challenge mostly because existing application composition frameworks do not address complex dependencies, external integrations or auto-scaling workflows post-provision. Moreover, the ephemeral design of containers meant that developers had to spin up new containers and re-create the complex dependencies & external integrations with every version update.
 
-DCHQ, available in hosted and on-premise versions, addresses all of these challenges and simplifies the containerization of enterprise Java applications through an advance application composition framework that extends Docker Compose with cross-image environment variable bindings, extensible BASH script plug-ins that can be invoked at request time or post-provision, and application clustering for high availability across multiple hosts or regions with support for auto scaling.
+DCHQ, available in hosted and on-premise versions, addresses all of these challenges and simplifies the containerization of enterprise Java applications through an advanced application composition framework that extends Docker Compose with cross-image environment variable bindings, extensible BASH script plug-ins that can be invoked at request time or post-provision, and application clustering for high availability across multiple hosts or regions with support for auto scaling.
 
 Once an application is provisioned, a user can monitor the CPU, Memory, & I/O of the running containers, get notifications & alerts, and get access to application backups, automatic scale in/out workflows, and plug-in execution workflows to update running containers. Moreover, out-of-box workflows that facilitate Continuous Delivery with Jenkins allow developers to refresh the Java WAR file of a running application without disrupting the existing dependencies & integrations.
 
 In previous blogs, we demonstrated the end-to-end deployment automation of more traditional, or typical brownfield Java applications (like Names Directory, Pizza Shop and Movie Store apps) on multi-tier Docker-based application stacks across 13 different clouds & virtualization platforms. For full list of these blogs, you can visit this page: <a href="http://dchq.co/docker-java-applications.html">**http://dchq.co/docker-java-applications.html**</a>
 
-In this project, we focus on a microservices architecture that requires no application servers whatsoever. Each micro-service runs on an extremely lightweight Java container. A consolidated front-end was built to make REST API calls to each of the connected microservices in order execute a specific task (e.g. create an account, query an account or transfer money from one account to another). One of the main advantages of micro-services (when compared to a typical monolithic application) is that these modular services can be easily replaced and extended without requiring changes to the other microservices. In a way, this eliminates single points of failure and makes it easier for developers to contribute to the overall project.
+In this project, we focus on a microservices architecture that requires no application servers whatsoever. Each micro-service runs on an extremely lightweight Java container. A consolidated front-end was built to make REST API calls to each of the connected microservices in order to execute a specific task (e.g. create an account, query an account or transfer money from one account to another). One of the main advantages of micro-services (when compared to a typical monolithic application) is that these modular services can be easily replaced and extended without requiring changes to the other microservices. In a way, this eliminates single points of failure and makes it easier for developers to contribute to the overall project.
 
 In this project, we will provide a step-by-step guide for deploying and managing this Java application on different cloud/virtual infrastructure.
 
 We will cover:
 
 -   Obtain credentials for the Event Store
--   
+
 -   Applying a patch and building the JAR files
 
 -   Automating the building of Docker images from Dockerfiles in this project using DCHQ
