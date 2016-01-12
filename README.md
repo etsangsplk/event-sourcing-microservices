@@ -365,6 +365,8 @@ The supported parameters for the Machine Compose template are summarized below:
 
 -   **description**: Description of the blueprint/template
 
+-   **subnet**: Cloud provider specific value (e.g. subnet ID for AWS)
+
 -   **instanceType**: Cloud provider specific value (e.g. general1-4)
 
 -   **region**: Cloud provider specific value (e.g. IAD)
